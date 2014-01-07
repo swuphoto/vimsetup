@@ -1,0 +1,214 @@
+UnBundle 'klen/python-mode'
+UnBundle 'python.vim'
+UnBundle 'python_match.vim'
+UnBundle 'pythoncomplete'
+UnBundle 'Shougo/neosnippet'
+UnBundle 'spf13/PIV'
+UnBundle 'arnaud-lb/vim-php-namespace'
+UnBundle 'kien/ctrlp.vim'
+UnBundle 'Twinside/vim-haskellConceal'
+UnBundle 'lukerandall/haskellmode-vim'
+UnBundle 'tpope/vim-rails'
+UnBundle 'tpope/vim-cucumber'
+UnBundle 'quentindecock/vim-cucumber-align-pipes'
+UnBundle 'Puppet-Syntax-Highlighting'
+UnBundle 'kchmck/vim-coffee-script'
+UnBundle 'derekwyatt/vim-scala'
+UnBundle 'adinapoli/cumino'
+UnBundle 'tpope/vim-haml'
+UnBundle 'bitc/vim-hdevtools'
+UnBundle 'bling/vim-bufferline'
+UnBundle 'altercation/vim-colors-solarized'
+UnBundle 'groenewege/vim-less'
+UnBundle 'jnwhiteh/vim-golang'
+UnBundle 'matchit.zip'
+UnBundle 'mattn/gist-vim'
+UnBundle 'mattn/webapi-vim'
+UnBundle 'mhinz/vim-signify'
+UnBundle 'spf13/vim-gocode'
+UnBundle 'tpope/vim-abolish.git'
+UnBundle 'travitch/hasksyn'
+UnBundle 'bling/vim-airline'
+UnBundle 'vim-scripts/sessionman.vim'
+UnBundle 'beyondwords/vim-twig'
+UnBundle 'briancollins/vim-jst'
+UnBundle 'dag/vim2hs'
+UnBundle 'derekwyatt/vim-sbt'
+UnBundle 'justinmk/vim-sneak'
+UnBundle 'osyo-manga/vim-over'
+UnBundle 'honza/vim-snippets'
+UnBundle 'spf13/vim-colors'
+UnBundle 'elzr/vim-json'
+UnBundle 'spf13/vim-preview'
+UnBundle 'godlygeek/tabular'
+UnBundle 'eagletmt/ghcmod-vim'
+UnBundle 'eagletmt/neco-ghc'
+UnBundle 'Shougo/neocomplcache'
+UnBundle 'Lokaltog/vim-easymotion'
+UnBundle 'amirh/HTML-AutoCloseTag'
+UnBundle 'hail2u/vim-css3-syntax'
+
+
+
+"
+" ------------------ My Part ----------------------------
+" ----- Color Settings -------
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Inconsolata\ 12
+  elseif has("gui_macvim")
+    set guifont=Menlo\ Regular:h14
+  elseif has("gui_win32")
+    "set guifont=Source_Code_Pro_Medium:h12:cANSI
+    " fix font for airline / powerline
+    set guifont=DejaVu_Sans_Mono_for_Powerline:h12:cANSI
+    colorscheme landscape
+    "colorscheme jellybeans
+    "-- maximize the initial window
+    au GUIEnter * simalt ~x
+  endif
+endif
+syntax on
+" ---------------- UNITE Plugin  ---------------------------------
+nnoremap <C-p> :Unite file_rec<cr>
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+nnoremap <space>s :Unite -quick-match buffer<cr>
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Play nice with supertab
+  let b:SuperTabDisabled=1
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+
+
+"------------------------------ lightline  ---------------------------------
+set encoding=utf-8
+set laststatus=2
+"let g:Powerline_symbols = 'fancy'
+let g:lightline = {
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'MyModified',
+      \   'readonly': 'MyReadonly',
+      \   'fugitive': 'MyFugitive',
+      \   'filename': 'MyFilename',
+      \   'fileformat': 'MyFileformat',
+      \   'filetype': 'MyFiletype',
+      \   'fileencoding': 'MyFileencoding',
+      \   'mode': 'MyMode',
+      \ },
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2"  },
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+      \ }
+"      \ 'colorscheme': 'landscape',
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() : 
+        \  &ft == 'unite' ? unite#get_status_string() : 
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+    let _ = fugitive#head()
+    return strlen(_) ? '⭠ '._ : ''
+  endif
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+"--------- XPT stuff -----------
+" copied from youtube
+let g:xptemplate_snippet_folders=['c:\Users\i826313\vimfiles\mysnips']
+let g:xptemplate_brace_complete = 0
+let g:xptemplate_key_pum_only = '<Leader><tab>'
+let g:xptemplate_always_show_pum = 1
+imap <C-d> <Tab>
+let g:xptemplate_nav_cancel = '<C-d>'
+let g:xptemplate_nav_next = '<Tab>'
+let g:xptemplate_to_right = '<C-_>'
+let g:xptemplate_goback = '<C-g>'
+let g:xptemplate_pum_tab_nav = 1
+nmap <A-F1> :XPTreload<CR>
+" avoid key conflict
+let g:SuperTabMappingForward = '<Plug>supertabKey'
+
+" if nothing matched in xpt, try supertab
+let g:xptemplate_fallback = '<Plug>supertabKey'
+
+" xpt uses <Tab> as trigger key
+let g:xptemplate_key = '<Tab>'
+
+" " use <tab>/<S-tab> to navigate through pum. Optional
+" let g:xptemplate_pum_tab_nav = 1
+
+" " xpt triggers only when you typed whole name of a snippet. Optional
+" let g:xptemplate_minimal_prefix = 'full'
+
+" --------- SUPERTAB ---------------- "
+let g:SuperTabDefaultCompletionType = '<c-p>'
+"to insert real tab, hit <c-tab>"
+
+"--------- javascript vim setup
+let b:javascript_fold = 1
+set regexpengine=1
+syntax enable
+
+"----------- TERN.JS ---------------------------------
+let g:tern_map_keys=1
+let g:tern_show_arguemnt_hints='on_hold'
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+
+"----------- MarkDown TimPole ---------------------------------
+let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_initial_foldlevel=1
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END"
+
+"-------------- TAGBAR ---------------------"
+nmap <F8> :TagbarToggle<CR>
+" -------     MISC --------------------------------------
+set foldlevel=2
