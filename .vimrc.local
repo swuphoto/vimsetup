@@ -3,7 +3,6 @@ UnBundle 'python.vim'
 UnBundle 'python_match.vim'
 UnBundle 'pythoncomplete'
 UnBundle 'Shougo/neosnippet'
-UnBundle 'spf13/PIV'
 UnBundle 'arnaud-lb/vim-php-namespace'
 UnBundle 'kien/ctrlp.vim'
 UnBundle 'Twinside/vim-haskellConceal'
@@ -47,7 +46,8 @@ UnBundle 'Shougo/neocomplcache'
 UnBundle 'Lokaltog/vim-easymotion'
 UnBundle 'amirh/HTML-AutoCloseTag'
 UnBundle 'hail2u/vim-css3-syntax'
-
+UnBundle 'spf13/PIV'
+UnBundle 'scrooloose/nerdtree'
 
 
 "
@@ -61,7 +61,7 @@ if has("gui_running")
   elseif has("gui_win32")
     "set guifont=Source_Code_Pro_Medium:h12:cANSI
     " fix font for airline / powerline
-    set guifont=DejaVu_Sans_Mono_for_Powerline:h12:cANSI
+    set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
     colorscheme landscape
     "colorscheme jellybeans
     "-- maximize the initial window
