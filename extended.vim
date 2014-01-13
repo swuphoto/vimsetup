@@ -13,7 +13,7 @@ if has("mac") || has("macunix")
     set gfn=Source\ Code\ Pro:h15,Menlo:h15
 elseif has("win16") || has("win32")
     "set gfn=Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
-    set gfn=DejaVu_Sans_Mono_for_Powerline:h12:cANSI
+    set gfn=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
 elseif has("linux")
     set gfn=Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
 elseif has("unix")
