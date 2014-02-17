@@ -137,7 +137,7 @@ set foldcolumn=1
 syntax enable 
 
 try
-    colorscheme peaksea
+    colorscheme desert
 catch
 endtry
 
@@ -170,8 +170,7 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set list listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
-
+set list listchars=trail:~
 " Use spaces instead of tabs
 set expandtab
 
@@ -190,6 +189,7 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+
 """"""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
@@ -207,8 +207,8 @@ map j gj
 map k gk
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
+"map <space> /
+"map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -231,6 +231,17 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove 
 map <leader>t<leader> :tabnext 
+
+nnoremap <A-F1> 1gt
+nnoremap <A-F2> 2gt
+nnoremap <A-F3> 3gt
+nnoremap <A-F4> 4gt
+nnoremap <A-F5> 5gt
+nnoremap <A-F6> 6gt
+nnoremap <A-F7> 7gt
+nnoremap <A-F8> 8gt
+nnoremap <A-F9> 9gt
+nnoremap <A-F0> 10gt
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory

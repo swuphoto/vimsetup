@@ -12,7 +12,6 @@
 if has("mac") || has("macunix")
     set gfn=Source\ Code\ Pro:h15,Menlo:h15
 elseif has("win16") || has("win32")
-    "set gfn=Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
     set gfn=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
 elseif has("linux")
     set gfn=Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
@@ -45,8 +44,8 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"map <leader>e :e! ~/.vim_runtime/my_configs.vim<cr>
-"autocmd! bufwritepost vimrc source ~/.vim_runtime/my_configs.vim
+map <leader>e :e! ~/.vim_runtime/my_configs.vim<cr>
+autocmd! bufwritepost vimrc source ~/.vim_runtime/my_configs.vim
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
